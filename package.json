@@ -1,0 +1,26 @@
+{
+    "name": "discordjs14",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "npx nodemon index.js",
+        "dev:legacy": "npx nodemon -L index.js",
+        "start": "node index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.7.0",
+    "dependencies": {
+        "discord.js": "^14.18.0",
+        "dotenv": "^16.5.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.24.0",
+        "editorconfig": "^2.0.1",
+        "eslint": "^9.24.0",
+        "globals": "^16.0.0",
+        "nodemon": "^3.1.9"
+    }
+}
