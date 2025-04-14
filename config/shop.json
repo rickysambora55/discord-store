@@ -1,0 +1,157 @@
+{
+    "diamond": {
+        "id": 1,
+        "name": "Diamond",
+        "type": "digital",
+        "description": "Premium game currency",
+        "globalDiscount": 0,
+        "items": [
+            {
+                "id": 101,
+                "label": "10💎",
+                "price": 11000,
+                "discount": 0,
+                "picture": ""
+            },
+            {
+                "id": 102,
+                "label": "20💎",
+                "price": 21500,
+                "discount": 0,
+                "picture": ""
+            },
+            {
+                "id": 103,
+                "label": "50💎",
+                "price": 54000,
+                "discount": 0,
+                "picture": ""
+            },
+            {
+                "id": 104,
+                "label": "100💎",
+                "price": 105000,
+                "discount": 0,
+                "picture": ""
+            },
+            {
+                "id": 105,
+                "label": "200💎",
+                "price": 210000,
+                "discount": 0,
+                "picture": ""
+            },
+            {
+                "id": 106,
+                "label": "500💎",
+                "price": 510000,
+                "discount": 0,
+                "picture": ""
+            },
+            {
+                "id": 107,
+                "label": "1000💎",
+                "price": 1010000,
+                "discount": 0,
+                "picture": ""
+            }
+        ]
+    },
+    "skin": {
+        "id": 2,
+        "name": "Skin",
+        "type": "item",
+        "description": "Unique premium skin",
+        "globalDiscount": 0,
+        "items": [
+            {
+                "id": 201,
+                "label": "Sonic",
+                "price": 1000,
+                "discount": 10,
+                "picture": "https://upload.wikimedia.org/wikipedia/en/f/f4/Sonic_modern_and_classic_designs.png"
+            },
+            {
+                "id": 202,
+                "label": "Mario",
+                "price": 1000,
+                "discount": 0,
+                "picture": "https://upload.wikimedia.org/wikipedia/en/5/5c/Mario_by_Shigehisa_Nakaue.png"
+            },
+            {
+                "id": 203,
+                "label": "Luigi",
+                "price": 1000,
+                "discount": 0,
+                "picture": "https://upload.wikimedia.org/wikipedia/en/b/be/Luigi_by_Shigehisa_Nakaue.png"
+            }
+        ]
+    },
+    "equipment": {
+        "id": 3,
+        "name": "Equipment",
+        "type": "item",
+        "description": "Powerful gear to enhance your character",
+        "globalDiscount": 0,
+        "items": [
+            {
+                "id": 301,
+                "label": "Excalibur Sword",
+                "price": 15000,
+                "discount": 0,
+                "picture": "https://example.com/equipment/excalibur.png"
+            },
+            {
+                "id": 302,
+                "label": "Dragon Shield",
+                "price": 12000,
+                "discount": 5,
+                "picture": "https://example.com/equipment/dragon-shield.png"
+            },
+            {
+                "id": 303,
+                "label": "Phantom Cloak",
+                "price": 10000,
+                "discount": 0,
+                "picture": "https://example.com/equipment/phantom-cloak.png"
+            },
+            {
+                "id": 304,
+                "label": "Iron Helmet",
+                "price": 5000,
+                "discount": 0,
+                "picture": ""
+            }
+        ]
+    },
+    "bundleBox": {
+        "id": 4,
+        "name": "Bundle Box",
+        "type": "item",
+        "description": "Contains random rare equipment or skins",
+        "globalDiscount": 0,
+        "items": [
+            {
+                "id": 401,
+                "label": "Silver Crate",
+                "price": 8000,
+                "discount": 0,
+                "picture": "https://example.com/bundles/silver-crate.png"
+            },
+            {
+                "id": 402,
+                "label": "Gold Crate",
+                "price": 15000,
+                "discount": 10,
+                "picture": "https://example.com/bundles/gold-crate.png"
+            },
+            {
+                "id": 403,
+                "label": "Mystery Chest",
+                "price": 25000,
+                "discount": 15,
+                "picture": "https://example.com/bundles/mystery-chest.png"
+            }
+        ]
+    }
+}

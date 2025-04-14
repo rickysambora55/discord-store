@@ -26,5 +26,12 @@
     },
     "ping": {
         "desc": "Current bot latency"
+    },
+    "shop": {
+        "prefix": "shop",
+        "menuPlaceholder": "Select a category",
+
+        "title": "🍀 Lucky Bot Store",
+        "description": "Discover premium game currency, exclusive skins, powerful gear, and exciting mystery bundles — all in one place. Level up your game today! 🎮"
     }
 }

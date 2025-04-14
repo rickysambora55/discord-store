@@ -1,22 +1,22 @@
-import getCommands from "../../utils/getCommands.js";
+import getSelects from "../../utils/getCommands.js";
 
 export default async (client, interaction) => {
     // Check if interaction is a button
-    if (!interaction.isButton()) return;
+    if (!interaction.isAnySelectMenu()) return;
 
-    // Get buttons files
-    const buttons = await getCommands([], "buttons");
-    const buttonObject = buttons.find((btn) => {
-        const idPattern = new RegExp(`^${btn.customId}`);
+    // Get select menu files
+    const selects = await getSelects([], "selects");
+    const selectObject = selects.find((slc) => {
+        const idPattern = new RegExp(`^${slc.customId}`);
         return idPattern.test(interaction.customId);
     });
 
     // Return if not exist
-    if (!buttonObject) return;
+    if (!selectObject) return;
 
     // Check if button is dev only
     if (
-        buttonObject.devOnly &&
+        selectObject.devOnly &&
         !client.config.devId.includes(interaction.member.id)
     ) {
         const embed = await client.function.descEmbed(
@@ -29,7 +29,7 @@ export default async (client, interaction) => {
 
     // Check if command is local only
     if (
-        buttonObject.testMode &&
+        selectObject.testMode &&
         interaction?.guild?.id !== process.env.LOCALSERVER
     ) {
         const embed = await client.function.descEmbed(
@@ -41,7 +41,7 @@ export default async (client, interaction) => {
     }
 
     // Check if user has permissions
-    for (const permission of buttonObject.userPermissions || []) {
+    for (const permission of selectObject.userPermissions || []) {
         if (!interaction.member.permissions.has(permission)) {
             const embed = await client.function.descEmbed(
                 client,
@@ -55,20 +55,20 @@ export default async (client, interaction) => {
     // Check if bot has permissions
     if (interaction.guild) {
         const bot = interaction.guild.members.me;
-        for (const permission of buttonObject.botPermissions || []) {
+        for (const permission of selectObject.botPermissions || []) {
             if (!bot.permissions.has(permission)) {
                 const embed = await client.function.descEmbed(
                     client,
                     client.messages.general.botNoPermissions,
                     client.config.color.error
                 );
-                return interaction.reply({ embeds: [embed], ephemeral: false });
+                return interaction.reply({ embeds: [embed], ephemeral: true });
             }
         }
     }
 
     //Check if the button is yours
-    if (interaction.message.interaction && buttonObject.selfInteract) {
+    if (interaction.message.interaction && selectObject.selfInteract) {
         if (interaction.message.interaction.user.id !== interaction.user.id) {
             const embed = await client.function.descEmbed(
                 client,
@@ -81,9 +81,9 @@ export default async (client, interaction) => {
 
     // Execute the code
     try {
-        await buttonObject.execute(client, interaction);
+        await selectObject.execute(client, interaction);
     } catch (err) {
         // Return error
-        console.log(client.messages.general.errorValidatingButton, err);
+        console.log(client.messages.general.errorValidatingSelectMenu, err);
     }
 };

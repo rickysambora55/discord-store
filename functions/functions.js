@@ -1,4 +1,35 @@
-import { EmbedBuilder } from "discord.js";
+import {
+    EmbedBuilder,
+    ActionRowBuilder,
+    StringSelectMenuBuilder,
+    StringSelectMenuOptionBuilder,
+} from "discord.js";
+
+//Embed template
+export function createEmbed(
+    client,
+    title,
+    desc,
+    footer,
+    color = client.config.color.bot
+) {
+    const embed = new EmbedBuilder().setColor(parseInt(color)).setTimestamp();
+
+    if (title) {
+        embed.setTitle(title);
+    }
+
+    if (desc) {
+        embed.setDescription(desc);
+    }
+
+    if (footer) {
+        embed.setFooter({
+            text: footer,
+        });
+    }
+    return embed;
+}
 
 // Embed template with description only
 export function descEmbed(client, desc, color = client.config.color.bot) {
@@ -23,6 +54,45 @@ export function removeDuplicates(arr, prop) {
         seen.add(obj[prop]);
         return true;
     });
+}
+
+// Select menu
+export async function selectMenu(data, id, placeholder) {
+    var list = [];
+    const s = new ActionRowBuilder();
+    for (const optionData of data) {
+        const { label, value, description, emoji, first = false } = optionData;
+
+        const option = await selectOptions(
+            label,
+            value,
+            description,
+            emoji,
+            first
+        );
+
+        list.push(option);
+    }
+
+    const menu = new StringSelectMenuBuilder()
+        .setCustomId(id)
+        .setPlaceholder(placeholder)
+        .addOptions(list);
+    s.addComponents(menu);
+
+    return s;
+}
+
+// Create select menu options
+export async function selectOptions(label, value, description, emoji, first) {
+    let s = new StringSelectMenuOptionBuilder()
+        .setLabel(label)
+        .setValue(value)
+        .setDefault(first);
+    if (description || description != "") s.setDescription(description);
+    if (emoji) s.setEmoji(emoji);
+
+    return s;
 }
 
 // Error catch
