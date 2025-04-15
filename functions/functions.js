@@ -1,5 +1,7 @@
 import {
+    ButtonStyle,
     EmbedBuilder,
+    ButtonBuilder,
     ActionRowBuilder,
     StringSelectMenuBuilder,
     StringSelectMenuOptionBuilder,
@@ -93,6 +95,104 @@ export async function selectOptions(label, value, description, emoji, first) {
     if (emoji) s.setEmoji(emoji);
 
     return s;
+}
+
+// Pagination
+export async function pagination(prefix, sub, page, totPage, sort, param) {
+    const pagination = new ActionRowBuilder();
+    const first = new ButtonBuilder()
+        .setCustomId(`${prefix}_${sub}_1_${totPage}_1${param}`)
+        .setLabel("First")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("⏮️")
+        .setDisabled(page <= 1);
+    const back = new ButtonBuilder()
+        .setCustomId(
+            `${prefix}_${sub}_${parseInt(page) - 1}_${totPage}_2${param}`
+        )
+        .setLabel("Back")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("◀️")
+        .setDisabled(page <= 1);
+    const next = new ButtonBuilder()
+        .setCustomId(
+            `${prefix}_${sub}_${parseInt(page) + 1}_${totPage}_3${param}`
+        )
+        .setLabel("Next")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("▶️")
+        .setDisabled(page >= totPage);
+    const last = new ButtonBuilder()
+        .setCustomId(`${prefix}_${sub}_${totPage}_${totPage}_4${param}`)
+        .setLabel("Last")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("⏭️")
+        .setDisabled(page >= totPage);
+    const sortBtn = new ButtonBuilder()
+        .setCustomId(`${prefix}_${sub}_${page}_${totPage}_5${param}`)
+        .setLabel("Sort")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("🔃")
+        .setDisabled(!sort);
+
+    if (sort) {
+        if (totPage > 2) {
+            pagination.addComponents(first, back, next, last, sortBtn);
+        } else if (totPage > 1) {
+            pagination.addComponents(back, next, sortBtn);
+        } else {
+            pagination.addComponents(sortBtn);
+        }
+    } else if (!sort) {
+        if (totPage > 2) {
+            pagination.addComponents(first, back, next, last);
+        } else if (totPage > 1) {
+            pagination.addComponents(back, next);
+        } else {
+            return null;
+        }
+    } else return null;
+    return pagination;
+}
+
+// Product Pagination
+export async function productPagination(
+    prefix,
+    category,
+    productId,
+    page,
+    totPage,
+    buyable = false
+) {
+    const pagination = new ActionRowBuilder();
+    const back = new ButtonBuilder()
+        .setCustomId(
+            `${prefix}_nav_${category}_${parseInt(page) - 1}_${totPage}_1`
+        )
+        .setLabel("Back")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("◀️")
+        .setDisabled(page <= 1 || totPage == 1);
+    const buy = new ButtonBuilder()
+        .setCustomId(
+            `${prefix}_buy_${category}_${parseInt(productId)}_${totPage}_2`
+        )
+        .setLabel("Buy")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("🛒")
+        .setDisabled(!buyable);
+    const next = new ButtonBuilder()
+        .setCustomId(
+            `${prefix}_nav_${category}_${parseInt(page) + 1}_${totPage}_3`
+        )
+        .setLabel("Next")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("▶️")
+        .setDisabled(page >= totPage || totPage == 1);
+
+    pagination.addComponents(back, buy, next);
+
+    return pagination;
 }
 
 // Error catch

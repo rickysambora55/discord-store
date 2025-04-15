@@ -1,5 +1,4 @@
 import { SlashCommandBuilder } from "discord.js";
-import shop from "../../config/shop.json" with {type: "json"}
 
 export const data = new SlashCommandBuilder()
     .setName("shop")
@@ -12,24 +11,31 @@ export async function execute(client, interaction) {
         // Deferred
         await interaction.deferReply();
 
+        // Get categories
+        const categories = await client.db.Category.findAll({
+            raw: true,
+        });
+
+        // Format categories for menu and list
         let desc = "";
-        for (const category in shop) {
-            desc += `- ${shop[category].name}\n`;
-        }
+        let menuData = [];
+        categories.forEach((category) => {
+            desc += `- **${category.name}** - ${category.description}\n`;
+
+            menuData.push({
+                label: category.name,
+                value: `${category.id}`,
+                description: category.description,
+                first: false,
+            });
+        });
 
         // Embed
         const embed = await client.function.createEmbed(client);
         embed.setTitle(client.messages.shop.title);
         embed.setDescription(`${client.messages.shop.description}\n${desc}`);
 
-        // Select menu
-        const menuData = Object.keys(shop).map((category) => ({
-            label: shop[category].name,
-            value: category,
-            description: shop[category].description,
-            first: false,
-        }));
-
+        // Select menu setup
         const menu =
             menuData.length > 0
                 ? await client.function.selectMenu(

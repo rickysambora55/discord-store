@@ -1,12 +1,13 @@
-import 'dotenv/config';
+import "dotenv/config";
 import { Client, GatewayIntentBits, Partials, Collection } from "discord.js";
 import eventHandler from "./handlers/eventHandler.js";
 import pkg from './package.json' with { type: 'json' };
 import config from './config/config.json' with { type: 'json' };
 import messages from './config/messages.json' with { type: 'json' };
-import * as botFunctions from './functions/functions.js';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import * as botFunctions from "./functions/functions.js";
+import { fileURLToPath } from "url";
+import path from "path";
+import db from "./models/index.js";
 
 let client;
 
@@ -32,7 +33,11 @@ async function startBot() {
 
     // Login
     try {
-        client.login(process.env.TOKEN);
+        db.sequelize.sync().then(() => {
+            client.db = db;
+
+            client.login(process.env.TOKEN);
+        });
     } catch (error) {
         console.error("❌ Failed to login:", error);
     } finally {
@@ -43,11 +48,12 @@ async function startBot() {
 }
 
 // Auto-start if run directly
-const isMain = process.argv[1] &&
-  fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+const isMain =
+    process.argv[1] &&
+    fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
 
 if (isMain) {
-  startBot();
+    await startBot();
 }
 
 // Export both startBot and client (initially undefined)
