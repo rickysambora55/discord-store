@@ -40,7 +40,7 @@ export async function execute(client, interaction) {
             menuData.length > 0
                 ? await client.function.selectMenu(
                       menuData,
-                      `${client.messages.shop.prefix}`,
+                      `${client.messages.shop.prefix}nav`,
                       client.messages.shop.menuPlaceholder
                   )
                 : null;

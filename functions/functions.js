@@ -59,19 +59,13 @@ export function removeDuplicates(arr, prop) {
 }
 
 // Select menu
-export async function selectMenu(data, id, placeholder) {
+export function selectMenu(data, id, placeholder) {
     var list = [];
     const s = new ActionRowBuilder();
     for (const optionData of data) {
         const { label, value, description, emoji, first = false } = optionData;
 
-        const option = await selectOptions(
-            label,
-            value,
-            description,
-            emoji,
-            first
-        );
+        const option = selectOptions(label, value, description, emoji, first);
 
         list.push(option);
     }
@@ -86,7 +80,7 @@ export async function selectMenu(data, id, placeholder) {
 }
 
 // Create select menu options
-export async function selectOptions(label, value, description, emoji, first) {
+export function selectOptions(label, value, description, emoji, first) {
     let s = new StringSelectMenuOptionBuilder()
         .setLabel(label)
         .setValue(value)

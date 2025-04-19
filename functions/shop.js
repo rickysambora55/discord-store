@@ -48,7 +48,7 @@ export async function productView(client, category, page = 1) {
         menuData.length > 0
             ? await client.function.selectMenu(
                   menuData,
-                  `${client.messages.shop.prefix}`,
+                  `${client.messages.shop.prefix}nav`,
                   client.messages.shop.menuPlaceholder
               )
             : null;
@@ -81,12 +81,16 @@ export async function productView(client, category, page = 1) {
             return { embed, menu, btn };
         }
         case 1: {
-            embed = currencyLayout(client, products);
+            const { embed, menuBuy } = await currencyLayout(
+                client,
+                category,
+                products
+            );
             embed.setTitle(
                 `${client.messages.shop.title} - ${categoryInfo.name}`
             );
 
-            return { embed, menu };
+            return { embed, menu, menuBuy };
         }
     }
 
@@ -131,8 +135,18 @@ function itemLayout(client, product) {
     return embed;
 }
 
-function currencyLayout(client, products) {
+async function currencyLayout(client, category, products) {
     const embed = client.function.createEmbed(client);
+
+    let menuData = [];
+
+    // Get category name
+    const categoryInfo = await client.db.Category.findOne({
+        where: {
+            id: category,
+        },
+        raw: true,
+    });
 
     if (products.length > 0) {
         let desc = "**🌟 Available Products**\n\n";
@@ -159,6 +173,14 @@ function currencyLayout(client, products) {
 
             desc += `**${product.name}**\n`;
             desc += `- ${isAvailable ? finalPrice : outStock}\n`;
+
+            // Menu
+            menuData.push({
+                label: product.name,
+                value: `${product.id}`,
+                description: `${categoryInfo.name} ${product.name}`,
+                first: false,
+            });
         });
 
         embed.setDescription(desc);
@@ -166,7 +188,17 @@ function currencyLayout(client, products) {
         embed.setDescription(client.messages.shop.noProductList);
     }
 
-    return embed;
+    // Select menu setup
+    const menuBuy =
+        menuData.length > 0
+            ? client.function.selectMenu(
+                  menuData,
+                  `${client.messages.shop.prefix}buy`,
+                  client.messages.shop.menuBuyPlaceholder
+              )
+            : null;
+
+    return { embed, menuBuy };
 }
 
 export async function productBuy(client, productId) {
