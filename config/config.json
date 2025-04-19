@@ -8,5 +8,10 @@
         "secondary": "0x808080",
         "primary": "0x24ACF2",
         "default": "0xE3E5E8"
+    },
+    "currency": "Rp",
+    "shop": {
+        "0": "items",
+        "1": "currency"
     }
 }

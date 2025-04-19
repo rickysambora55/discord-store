@@ -39,12 +39,6 @@ export default (sequelize, DataTypes) => {
             foreignKey: "id_category",
             onDelete: "CASCADE",
         });
-        Category.belongsTo(models.Type, {
-            foreignKey: "id_type",
-            targetKey: "id",
-            onUpdate: "CASCADE",
-            onDelete: "CASCADE",
-        });
     };
 
     return Category;
