@@ -107,7 +107,9 @@ function itemLayout(client, product) {
     const formattedPrice = `\`${client.config.currency}${(
         price * discount
     ).toLocaleString()}\``;
-    const finalPrice = `${isSale ? stPrice : ""}${formattedPrice}`;
+    const finalPrice = `${isSale ? stPrice : ""} ${formattedPrice}${
+        isSale ? ` (🔥 ${product.discount}% off)` : ""
+    }`;
 
     // Availability
     const isAvailable = product.buyable;
@@ -133,16 +135,37 @@ function currencyLayout(client, products) {
     const embed = client.function.createEmbed(client);
 
     if (products.length > 0) {
-        let desc = "";
+        let desc = "**🌟 Available Products**\n\n";
+
         products.forEach((product) => {
-            desc += `- ${product.name} - ${
+            const price = product.price;
+            const discount = (100 - product.discount) / 100;
+            const isSale = product.discount > 0;
+
+            // Format price with sale prices
+            const stPrice = `~~${
                 client.config.currency
-            }${product.price.toLocaleString()}\n`;
+            }${price.toLocaleString()}~~ `;
+            const formattedPrice = `\`${client.config.currency}${(
+                price * discount
+            ).toLocaleString()}\``;
+            const finalPrice = `${isSale ? stPrice : ""} ${formattedPrice}${
+                isSale ? ` (🔥 ${product.discount}% off)` : ""
+            }`;
+
+            // Availability
+            const isAvailable = product.buyable;
+            const outStock = " _(Out of stock)_";
+
+            desc += `**${product.name}**\n`;
+            desc += `- ${isAvailable ? finalPrice : outStock}\n`;
         });
+
         embed.setDescription(desc);
     } else {
         embed.setDescription(client.messages.shop.noProductList);
     }
+
     return embed;
 }
 
