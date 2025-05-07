@@ -254,3 +254,77 @@ export async function productBuy(client, productId, payload) {
 
     return { embed };
 }
+
+export async function listProduct(client, message, page = 1) {
+    const limit = client.config.shop.maxList;
+    const offset = client.config.shop.maxList * (page - 1);
+
+    const products = await client.db.Product.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        raw: true,
+    });
+
+    if (products.count === 0) {
+        return message.reply(client.messages.shop.noProductList);
+    }
+
+    // Counting page
+    const totPage = Math.ceil(products.count / client.config.shop.maxList);
+
+    // Pagination
+    const btn = await client.function.pagination(
+        client.messages.shop.prefix,
+        "listproduct",
+        page,
+        totPage,
+        false,
+        `_${message.id}`
+    );
+
+    const embed = client.function.createEmbed(client, "List of products 📦");
+    embed.setDescription(
+        `ID - Name\n${products.rows
+            .map((product) => `**[${product.id}]** ${product.name}`)
+            .join("\n")}`
+    );
+
+    return { embed, btn };
+}
+
+export async function listCategory(client, message, page = 1) {
+    const limit = client.config.shop.maxList;
+    const offset = client.config.shop.maxList * (page - 1);
+
+    const categories = await client.db.Category.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        raw: true,
+    });
+
+    if (categories.count === 0) {
+        return message.reply(client.messages.shop.categoryNotFound);
+    }
+
+    // Counting page
+    const totPage = Math.ceil(categories.count / client.config.shop.maxList);
+
+    // Pagination
+    const btn = await client.function.pagination(
+        client.messages.shop.prefix,
+        "listproduct",
+        page,
+        totPage,
+        false,
+        `_${message.id}`
+    );
+
+    const embed = client.function.createEmbed(client, "List of categories 📖");
+    embed.setDescription(
+        `ID - Name\n${categories.rows
+            .map((product) => `**[${product.id}]** ${product.name}`)
+            .join("\n")}`
+    );
+
+    return { embed, btn };
+}

@@ -13,6 +13,7 @@
     },
     "currency": "Rp",
     "shop": {
+        "maxList": 25,
         "0": "items",
         "1": "currency"
     }

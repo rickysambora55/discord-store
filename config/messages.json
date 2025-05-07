@@ -37,6 +37,7 @@
         "title": "🍀 Lucky Bot Store",
         "description": "Discover premium game currency, exclusive skins, powerful gear, and exciting mystery bundles — all in one place. Level up your game today! 🎮",
         "invoiceTitle": "💳 Payment Pending!",
+        "invoiceCallback": "💳 Payment {0}",
         "invoiceDesc": "Your invoice for **{1}** is ready for processing. Please complete the payment before the **expiration time** to ensure timely delivery! ⏳",
         "invoiceFooter": "If you don’t receive your product within **10 minutes after payment**, contact our support team immediately.",
         "thankYou": "Thank you for your purchase! 💙",
@@ -47,10 +48,12 @@
 
         "error": "Error",
         "errorApi": "An error occurred while processing your request. Please try again later.",
+        "errorDuringCallback": "An error occurred during the callback.",
         "noProductList": "No products found.",
         "categoryNotFound": "Category not found.",
         "isNotNumber": "{0} must be a number.",
         "invalidImageUrl": "Invalid image URL.",
-        "invalidBuyable": "Buyable must be true, false, 1, 0, yes, or no."
+        "invalidBuyable": "Buyable must be true, false, 1, 0, yes, or no.",
+        "transactionNotFound": "Transaction not found."
     }
 }
