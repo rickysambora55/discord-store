@@ -17,6 +17,7 @@
         "errorRegisterContextMenu": "[error] Error while registering context menus!",
         "errorDatabase": "[error] Error while connecting database!",
         "errorValidatingCommand": "[error] Error while validating command!",
+        "errorValidatingCommandText": "[error] Error while validating command text!",
         "errorValidatingButton": "[error] Error while validating button!",
         "errorValidatingAutocomplete": "[error] Error while validating autocomplete!",
         "errorCode": "[error] Error code in {0}",
@@ -40,8 +41,16 @@
         "invoiceFooter": "If you don’t receive your product within **10 minutes after payment**, contact our support team immediately.",
         "thankYou": "Thank you for your purchase! 💙",
 
+        "addProductUsage": "Usage !addproduct <name> <category id> <price> [discount:1-100] [picture:url] [buyable:yes/no]",
+        "productAdded": "Product added successfully!",
+        "productDeleted": "Product deleted successfully!",
+
         "error": "Error",
         "errorApi": "An error occurred while processing your request. Please try again later.",
-        "noProductList": "No products found."
+        "noProductList": "No products found.",
+        "categoryNotFound": "Category not found.",
+        "isNotNumber": "{0} must be a number.",
+        "invalidImageUrl": "Invalid image URL.",
+        "invalidBuyable": "Buyable must be true, false, 1, 0, yes, or no."
     }
 }

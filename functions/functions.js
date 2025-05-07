@@ -189,6 +189,15 @@ export async function productPagination(
     return pagination;
 }
 
+export function isValidImageUrl(url) {
+    try {
+        const parsed = new URL(url);
+        return /\.(jpg|jpeg|png|webp|gif|bmp|svg)$/i.test(parsed.pathname);
+    } catch {
+        return false;
+    }
+}
+
 // Error catch
 export async function errorCatch(client, interaction, error) {
     // Get data

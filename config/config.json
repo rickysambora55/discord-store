@@ -1,5 +1,7 @@
 {
     "devId": "",
+    "shopManagerId": ["330025008980164609"],
+    "chatCommandPrefix": "!",
     "color": {
         "bot": "0x34eb71",
         "success": "0x00D26A",

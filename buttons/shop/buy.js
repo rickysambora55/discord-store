@@ -15,6 +15,7 @@ export async function execute(client, interaction) {
         );
         let paymentGW = {};
 
+        // Only one payment method predefined
         try {
             const responses = await axios.post("https://dummyjson.com/test");
 
