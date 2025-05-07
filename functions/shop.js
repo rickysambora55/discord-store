@@ -201,7 +201,7 @@ async function currencyLayout(client, category, products) {
     return { embed, menuBuy };
 }
 
-export async function productBuy(client, productId) {
+export async function productBuy(client, productId, payload) {
     const product = await client.db.Product.findOne({
         where: {
             id: productId,
@@ -219,16 +219,36 @@ export async function productBuy(client, productId) {
         };
     }
 
+    const subTotal = payload.data.order_items.reduce((sum, item) => {
+        return sum + item.subtotal;
+    }, 0);
+    const dateExpired = new Date(
+        payload.data.expired_time * 1000
+    ).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: "Asia/Jakarta",
+    });
+
     const embed = client.function.createEmbed(client);
     embed.setTitle(client.messages.shop.invoiceTitle);
     embed.setDescription(
         `${client.messages.shop.invoiceDesc.replace("{1}", product.name)}\n\n` +
             `✨ **Details:**\n` +
+            `- **Reference**: ${payload.data.reference}\n` +
             `- **Product**: ${product.name}\n` +
-            `- **Amount Due**: \`${client.config.currency}99.410\`\n\n` +
+            `- **Amount Due**: \`${
+                client.config.currency
+            }${subTotal.toLocaleString()}\`\n` +
+            `- **Payment Method**: ${payload.data.payment_name}\n\n` +
             `🚨 **Attention!**\n` +
             `- ${client.messages.shop.invoiceFooter}\n\n` +
-            `⏰ **Expiration Date**: **99 April 2025, 00:49 WIB**\n\n` +
+            `⏰ **Expiration Date**: **${dateExpired} GMT+7**\n\n` +
             client.messages.shop.thankYou
     );
 

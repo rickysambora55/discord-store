@@ -22,7 +22,8 @@
         "errorCode": "[error] Error code in {0}",
         "errorPrefix": "[error]",
         "error": "⚠️ Unexpected error occurred. Please try again. If the issue persist, please contact administrator!",
-        "serverBusy": "Server is currently busy, please try again later. If the issue persist, please contact administrator!"
+        "serverBusy": "Server is currently busy, please try again later. If the issue persist, please contact administrator!",
+        "errorDM": "Unable to send ticket trascript to this user {0}. Either user retrict DM or user is not valid."
     },
     "ping": {
         "desc": "Current bot latency"
@@ -40,6 +41,7 @@
         "thankYou": "Thank you for your purchase! 💙",
 
         "error": "Error",
+        "errorApi": "An error occurred while processing your request. Please try again later.",
         "noProductList": "No products found."
     }
 }
