@@ -31,7 +31,7 @@ export default {
 
         if (discount && isNaN(Number(discount))) {
             return message.reply(
-                client.messages.shop.isNotNumber.replace("{0}", "Price")
+                client.messages.shop.isNotNumber.replace("{0}", "Discount")
             );
         }
 

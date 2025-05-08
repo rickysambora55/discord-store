@@ -43,8 +43,13 @@
         "thankYou": "Thank you for your purchase! 💙",
 
         "addProductUsage": "Usage !addproduct <name> <category id> <price> [discount:1-100] [picture:url] [buyable:yes/no]",
+        "addCategoryUsage": "Usage !addcategory <name> <currency/item> <description> [discount:1-100]",
+        "deleteProductUsage": "Usage !deleteproduct <product id>",
+        "deleteCategoryUsage": "Usage !deletecategory <category id>",
         "productAdded": "Product added successfully!",
         "productDeleted": "Product deleted successfully!",
+        "categoryAdded": "Category added successfully!",
+        "categoryDeleted": "Category deleted successfully!",
 
         "error": "Error",
         "errorApi": "An error occurred while processing your request. Please try again later.",
