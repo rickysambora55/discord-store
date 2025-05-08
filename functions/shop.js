@@ -71,7 +71,7 @@ export async function productView(client, category, page = 1) {
                 product.buyable
             );
 
-            embed = itemLayout(client, product);
+            embed = itemLayout(client, product, categoryInfo);
             embed.setTitle(
                 `${client.messages.shop.title} - ${categoryInfo.name}`
             );
@@ -100,21 +100,23 @@ export async function productView(client, category, page = 1) {
 }
 
 // Item layout
-function itemLayout(client, product) {
+function itemLayout(client, product, category) {
     const embed = client.function.createEmbed(client);
 
     // Get product details
     const price = product.price;
-    const discount = (100 - product.discount) / 100;
+    const totalDiscount =
+        1 - (1 - product.discount / 100) * (1 - category.globalDiscount / 100);
     const isSale = product.discount > 0;
 
     // Format price with sale prices
     const stPrice = `~~${client.config.currency}${price.toLocaleString()}~~ `;
     const formattedPrice = `\`${client.config.currency}${(
-        price * discount
+        price *
+        (1 - totalDiscount)
     ).toLocaleString()}\``;
     const finalPrice = `${isSale ? stPrice : ""} ${formattedPrice}${
-        isSale ? ` (🔥 ${product.discount}% off)` : ""
+        isSale ? ` (🔥 ${Math.round(totalDiscount * 100)}% off)` : ""
     }`;
 
     // Availability
@@ -155,7 +157,10 @@ async function currencyLayout(client, category, products) {
 
         products.forEach((product) => {
             const price = product.price;
-            const discount = (100 - product.discount) / 100;
+            const totalDiscount =
+                1 -
+                (1 - product.discount / 100) *
+                    (1 - categoryInfo.globalDiscount / 100);
             const isSale = product.discount > 0;
 
             // Format price with sale prices
@@ -163,10 +168,11 @@ async function currencyLayout(client, category, products) {
                 client.config.currency
             }${price.toLocaleString()}~~ `;
             const formattedPrice = `\`${client.config.currency}${(
-                price * discount
+                price *
+                (1 - totalDiscount)
             ).toLocaleString()}\``;
             const finalPrice = `${isSale ? stPrice : ""} ${formattedPrice}${
-                isSale ? ` (🔥 ${product.discount}% off)` : ""
+                isSale ? ` (🔥 ${Math.round(totalDiscount * 100)}% off)` : ""
             }`;
 
             // Availability
@@ -277,9 +283,19 @@ export async function productBuyHandle(client, interaction, productId) {
         });
     }
 
+    // Get category
+    const category = client.db.Category.findOne({
+        where: {
+            id: product.category_id,
+        },
+        raw: true,
+    });
+
     const member = await interaction.client.users.fetch(interaction.user.id);
+    const totalDiscount =
+        1 - (1 - product.discount / 100) * (1 - category.globalDiscount / 100);
     // const productName = product.name
-    // const productPrice = product.price * (100 - product.discount) / 100;
+    // const productPrice = product.price * (1 - totalDiscount);
     let paymentGW = {};
 
     // Only one payment method predefined
