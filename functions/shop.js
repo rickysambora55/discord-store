@@ -286,7 +286,7 @@ export async function productBuyHandle(client, interaction, productId) {
     // Get category
     const category = client.db.Category.findOne({
         where: {
-            id: product.category_id,
+            id: product.id_category,
         },
         raw: true,
     });
